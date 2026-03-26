@@ -12,6 +12,13 @@
   <ItemGroup>
     <None Include="music\**\*" CopyToOutputDirectory="PreserveNewest" LinkBase="music" />
   </ItemGroup>
+
+  <!-- Exclude test folder from main project compilation -->
+  <ItemGroup>
+    <Compile Remove="MazeKc.Tests\**" />
+    <EmbeddedResource Remove="MazeKc.Tests\**" />
+    <None Remove="MazeKc.Tests\**" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NAudio" Version="2.3.0" />
   </ItemGroup>

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MazeKc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c4644e9a17501d48aac637117991f971c2da9fd9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd6d10656a42fc06407497503e95805295d053ed")]
 [assembly: System.Reflection.AssemblyProductAttribute("MazeKc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MazeKc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

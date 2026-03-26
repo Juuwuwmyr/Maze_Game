@@ -1,5 +1,6 @@
 # Maze Quest
-![alt text](image.png)
+![alt text](image.png) 
+![alt text](image-1.png)
 **A Console-Based Data Structure and Algorithm (DSA) Demonstration Game**
 
 This document explains every Data Structure and Algorithm (DSA) used in the game, including their purpose and the actual C# code from the system.
