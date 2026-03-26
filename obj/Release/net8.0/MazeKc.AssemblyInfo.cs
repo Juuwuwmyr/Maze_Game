@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MazeKc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd6d10656a42fc06407497503e95805295d053ed")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+319497d35657b3bf1a1ad7a678471e156434d953")]
 [assembly: System.Reflection.AssemblyProductAttribute("MazeKc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MazeKc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
