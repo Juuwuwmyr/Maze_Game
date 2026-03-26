@@ -9,6 +9,7 @@ public class GameState
     public int Score { get; set; } = 0;
     public int CurrentLevel { get; set; } = 1;
     public const int MaxLevel = 5;
+    public string PlayerName { get; set; } = "Player";
 
     
     public int PlayerRow { get; set; }
@@ -83,6 +84,7 @@ public class GameState
         };
         StatusMessage = "";
         StatusMessageTimer = 0;
+        PlayerName = "Player";
     }
 
     

@@ -195,7 +195,7 @@ public static class Renderer
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write("║");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("     PLAYER STATUS        ");
+                Console.Write($"  PLAYER: {state.PlayerName,-16}  ");
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write("║");
                 break;
@@ -305,7 +305,7 @@ public static class Renderer
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write("║");
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write(" 🤴🏻 = You (Player)       ");
+                Console.Write(" 🤴🏻 = You (Player)        ");
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write("║");
                 break;
@@ -413,7 +413,7 @@ public static class Renderer
     
     
     
-    public static void RenderTitleScreen()
+    public static void RenderTitleScreen(int selectedIndex = 0)
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -434,7 +434,7 @@ public static class Renderer
         Console.ForegroundColor = ConsoleColor.DarkYellow;
         Console.WriteLine(@"    ║          ╔═══════════════════════════════════╗                   ║");
         Console.WriteLine(@"    ║          ║   E S C A P E   T H E   M A Z E   ║                   ║");
-        Console.WriteLine(@"    ║          ╚═══════════════════════════════════╝                   ║");
+        Console.WriteLine(@"    ║          ╚═══════════════════════════════════╗                   ║");
         Console.ForegroundColor = ConsoleColor.DarkCyan;
         Console.WriteLine(@"    ║                                                                  ║");
         Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -444,22 +444,45 @@ public static class Renderer
         Console.WriteLine(@"    ║                                                                  ║");
         Console.WriteLine(@"    ╚══════════════════════════════════════════════════════════════════╝");
         Console.WriteLine();
+
         Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine("          ┌─────────────────────────────────────┐");
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("          │         [1]  NEW GAME               │");
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("          │         [2]  LEADERBOARD            │");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.WriteLine("          │         [3]  HOW TO PLAY            │");
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("          │         [4]  EXIT                   │");
+        Console.WriteLine("          ┌─────────────────────────────────────────┐");
+        
+        PrintMenuItem(0, "NEW GAME", selectedIndex, ConsoleColor.Cyan);
+        PrintMenuItem(1, "LEADERBOARD", selectedIndex, ConsoleColor.Yellow);
+        PrintMenuItem(2, "HOW TO PLAY", selectedIndex, ConsoleColor.DarkGray);
+        PrintMenuItem(3, "EXIT", selectedIndex, ConsoleColor.Red);
+
         Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine("          └─────────────────────────────────────┘");
+        Console.WriteLine("          └─────────────────────────────────────────┘");
         Console.WriteLine();
         Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write("          Select an option: ");
+        Console.WriteLine("          Use [↑/↓] to navigate, [Enter] to select");
         Console.ResetColor();
+    }
+
+    private static void PrintMenuItem(int index, string text, int selectedIndex, ConsoleColor color)
+    {
+        bool isSelected = (index == selectedIndex);
+        
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write("          │  ");
+
+        if (isSelected)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkCyan;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write($" ► {text,-33} ");
+            Console.ResetColor();
+        }
+        else
+        {
+            Console.ForegroundColor = color;
+            Console.Write($"   {text,-33} ");
+        }
+
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine("  │");
     }
 
     
@@ -533,6 +556,36 @@ public static class Renderer
     
     
     
+    public static void RenderNameEntry(GameState state)
+    {
+        Console.Clear();
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine(@"    ╔══════════════════════════════════════════════╗");
+        Console.WriteLine(@"    ║                                              ║");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(@"    ║         E N T E R   Y O U R   N A M E        ║");
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine(@"    ║                                              ║");
+        Console.WriteLine(@"    ╠══════════════════════════════════════════════╣");
+        Console.WriteLine(@"    ║                                              ║");
+        Console.Write(@"    ║  Name: ");
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        
+        string name = Console.ReadLine()?.Trim() ?? "";
+        if (string.IsNullOrEmpty(name)) name = "Player";
+        if (name.Length > 16) name = name.Substring(0, 16);
+        state.PlayerName = name;
+
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        int remainingSpaces = 37 - name.Length;
+        Console.WriteLine(new string(' ', remainingSpaces) + "║");
+        Console.WriteLine(@"    ║                                              ║");
+        Console.WriteLine(@"    ╚══════════════════════════════════════════════╝");
+        Console.ResetColor();
+        Thread.Sleep(500);
+    }
+
     public static void RenderGameOver(GameState state)
     {
         Console.Clear();
@@ -575,24 +628,24 @@ public static class Renderer
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.DarkYellow;
         Console.WriteLine();
-        Console.WriteLine(@"    ╔══════════════════════════════════════════════════════╗");
-        Console.WriteLine(@"    ║                                                      ║");
+        Console.WriteLine(@"    ╔════════════════════════════════════════════════════════════════╗");
+        Console.WriteLine(@"    ║                                                                ║");
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine(@"    ║    ██╗   ██╗██╗ ██████╗████████╗ ██████╗ ██████╗ ██╗ ║");
-        Console.WriteLine(@"    ║    ██║   ██║██║██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗╚██╗║");
+        Console.WriteLine(@"    ║    ██╗   ██╗██╗ ██████╗████████╗ ██████╗ ██████╗ ██╗    ██╗    ║");
+        Console.WriteLine(@"    ║    ██║   ██║██║██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗╚██╗  ██╗     ║");
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine(@"    ║    ██║   ██║██║██║        ██║   ██║   ██║██████╔╝ ██║║");
-        Console.WriteLine(@"    ║    ╚██╗ ██╔╝██║██║        ██║   ██║   ██║██╔══██╗ ██║║");
+        Console.WriteLine(@"    ║    ██║   ██║██║██║        ██║   ██║   ██║██████╔╝   ██║        ║");
+        Console.WriteLine(@"    ║    ╚██╗ ██╔╝██║██║        ██║   ██║   ██║██╔══██╗   ██║        ║");
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine(@"    ║     ╚████╔╝ ██║╚██████╗   ██║   ╚██████╔╝██║  ██║██╔╝║");
-        Console.WriteLine(@"    ║      ╚═══╝  ╚═╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝ ║");
+        Console.WriteLine(@"    ║     ╚████╔╝ ██║╚██████╗   ██║   ╚██████╔╝██║  ██║   ██╔╝       ║");
+        Console.WriteLine(@"    ║      ╚═══╝  ╚═╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝   ╚═╝        ║");
         Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.WriteLine(@"    ║                                                      ║");
+        Console.WriteLine(@"    ║                                                                ║");
         Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine(@"    ║       You conquered all 5 levels of the maze!        ║");
+        Console.WriteLine(@"    ║       You conquered all 5 levels of the maze!                  ║");
         Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.WriteLine(@"    ║                                                      ║");
-        Console.WriteLine(@"    ╚══════════════════════════════════════════════════════╝");
+        Console.WriteLine(@"    ║                                                                ║");
+        Console.WriteLine(@"    ╚════════════════════════════════════════════════════════════════╝");
         Console.WriteLine();
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine($"              Final Score: {state.Score}");

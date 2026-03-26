@@ -20,3 +20,4 @@ C:\Users\moren\OneDrive\Desktop\MazeKc\bin\Debug\net8.0\NAudio.Midi.dll
 C:\Users\moren\OneDrive\Desktop\MazeKc\bin\Debug\net8.0\NAudio.Wasapi.dll
 C:\Users\moren\OneDrive\Desktop\MazeKc\bin\Debug\net8.0\NAudio.WinMM.dll
 C:\Users\moren\OneDrive\Desktop\MazeKc\obj\Debug\net8.0\MazeKc.csproj.Up2Date
+C:\Users\moren\OneDrive\Desktop\MazeKc\obj\Debug\net8.0\MazeKc.sourcelink.json

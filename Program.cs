@@ -24,38 +24,49 @@ class Program
         SoundManager.Initialize();
 
         bool running = true;
+        int selectedIndex = 0;
+
         while (running)
         {
             SoundManager.PlayMenuMusic();
-            Renderer.RenderTitleScreen();
+            Renderer.RenderTitleScreen(selectedIndex);
 
-            var key = Console.ReadKey(true).Key;
-            switch (key)
+            var keyInfo = Console.ReadKey(true);
+            var key = keyInfo.Key;
+
+            if (key == ConsoleKey.UpArrow)
             {
-                case ConsoleKey.D1:
-                case ConsoleKey.NumPad1:
-                    SoundManager.PlayMenuSelect();
-                    StartNewGame();
-                    break;
-
-                case ConsoleKey.D2:
-                case ConsoleKey.NumPad2:
-                    SoundManager.PlayMenuSelect();
-                    ScoreManager.ShowLeaderboard();
-                    break;
-
-                case ConsoleKey.D3:
-                case ConsoleKey.NumPad3:
-                    SoundManager.PlayMenuSelect();
-                    Renderer.RenderHowToPlay();
-                    break;
-
-                case ConsoleKey.D4:
-                case ConsoleKey.NumPad4:
-                case ConsoleKey.Escape:
-                    running = false;
-                    break;
+                selectedIndex = (selectedIndex - 1 + 4) % 4;
+                SoundManager.PlayMenuSelect();
             }
+            else if (key == ConsoleKey.DownArrow)
+            {
+                selectedIndex = (selectedIndex + 1) % 4;
+                SoundManager.PlayMenuSelect();
+            }
+            else if (key == ConsoleKey.Enter)
+            {
+                SoundManager.PlayMenuSelect();
+                switch (selectedIndex)
+                {
+                    case 0: // New Game
+                        StartNewGame();
+                        break;
+                    case 1: // Leaderboard
+                        ScoreManager.ShowLeaderboard();
+                        break;
+                    case 2: // How To Play
+                        Renderer.RenderHowToPlay();
+                        break;
+                    case 3: // Exit
+                        running = false;
+                        break;
+                }
+            }
+            else if (key == ConsoleKey.D1 || key == ConsoleKey.NumPad1) { selectedIndex = 0; StartNewGame(); }
+            else if (key == ConsoleKey.D2 || key == ConsoleKey.NumPad2) { selectedIndex = 1; ScoreManager.ShowLeaderboard(); }
+            else if (key == ConsoleKey.D3 || key == ConsoleKey.NumPad3) { selectedIndex = 2; Renderer.RenderHowToPlay(); }
+            else if (key == ConsoleKey.D4 || key == ConsoleKey.NumPad4 || key == ConsoleKey.Escape) { running = false; }
         }
 
         SoundManager.Shutdown();
@@ -74,6 +85,7 @@ class Program
     static void StartNewGame()
     {
         var state = new GameState();
+        Renderer.RenderNameEntry(state);
 
         while (!state.IsGameOver && state.IsRunning)
         {
@@ -147,16 +159,9 @@ class Program
         }
 
         
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.Write("    Enter your name for the leaderboard: ");
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        string name = Console.ReadLine()?.Trim() ?? "Player";
-        if (string.IsNullOrEmpty(name)) name = "Player";
-        if (name.Length > 16) name = name[..16];
-
         var entry = new ScoreEntry
         {
-            Name = name,
+            Name = state.PlayerName,
             Score = state.Score,
             Level = state.CurrentLevel,
             Date = DateTime.Now
